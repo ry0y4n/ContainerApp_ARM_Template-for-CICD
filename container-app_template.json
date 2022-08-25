@@ -11,7 +11,7 @@
       "type": "String"
     },
     "environment_name": {
-      "defaultValue": "containerapps-env",
+      "defaultValue": "myenvironment",
       "type": "String"
     }
     // "container_image": {
