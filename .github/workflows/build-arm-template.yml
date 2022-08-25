@@ -1,0 +1,52 @@
+on: [push]
+  name: Azure ARM
+  jobs:
+    ### Container Apps環境を作成
+    build-and-deploy-container-app-environment:
+      runs-on: ubuntu-latest
+      steps:
+
+        # Checkout code
+      - uses: actions/checkout@main
+
+        # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # Deploy ARM template
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./container-app-environment_template.json
+
+        # output containerName variable from template
+      - run: echo ${{ steps.deploy.outputs.containerName }}
+
+    ### コンテナーアプリを作成
+    build-and-deploy-container-app:
+      ## Container Apps環境作成のジョブが完了するまで実行しないようにする
+      needs: build-and-deploy-container-app-environment
+      runs-on: ubuntu-latest
+      steps:
+
+        # Checkout code
+      - uses: actions/checkout@main
+
+        # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # Deploy ARM template
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./container-app_template.json
+
+        # output containerName variable from template
+      - run: echo ${{ steps.deploy.outputs.containerName }}

@@ -9,14 +9,6 @@
     "environment_name": {
       "defaultValue": "myenvironment",
       "type": "String"
-    },
-    "log_analytics_customer_id": {
-      "defaultValue": "momosuke",
-      "type": "String"
-    },
-    "log_analytics_shared_key": {
-      "defaultValue": "Rh04170417",
-      "type": "SecureString"
     }
   },
   "functions": [],
