@@ -66,10 +66,6 @@
             {
               "image": "appforiacregistory.azurecr.io/flask-hello-world:v1",
               "name": "flask-hello-world"
-              // "resources": {
-              //   "cpu": 0.5,
-              //   "memory": "1.0Gi"
-              // }
             }
           ]
         }
